@@ -7,10 +7,10 @@ const Pool = pg.Pool
 const ops = module.exports = {}
 
 const pool = new Pool({
-  user: process.env.USER,
-  password: '',
+  user: 'postgres',
+  password: 'snowboard',
   host: 'localhost',
-  database: process.env.USER,
+  database: 'postgres',
   max: 10,
   idleTimeoutMillis: 1000
 })
@@ -110,7 +110,8 @@ ops.loadArticles = (file) => {
   .then(records => records.map(getAuthorId))
   .then(proms => Promise.all(proms))
   .then(records => records.map(loadRecordArticle))
-  .then(() => console.log('articles loaded successfully'))
   .then(proms => Promise.all(proms))
+  .then(() => console.log('articles loaded successfully'))
+
   .catch(err => console.error(err))
 }
